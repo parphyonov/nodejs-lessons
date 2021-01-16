@@ -1,4 +1,4 @@
-# Course Notes
+# Course Notes at www.pirple.com
 
 ## Section 2 - Background Information
 

@@ -17,11 +17,19 @@ const server = http.createServer((req, res) => {
   const path = parsedURL.pathname;
   const trimmedPath = path.replace(/^\/+|\/+$/g, '');
 
+  // Get the HTTP method.
+  const method = req.method.toLowerCase();
+
+  // Get the Query String Object.
+  const qso = parsedURL.query;
+
   // Send the response.
   res.end('Hello, world!\n');
 
   // Log the request path.
   console.log(`Request received on path: ${trimmedPath}`);
+  console.log(`Request method: ${method}`);
+  console.log('Query string parameters are: ', qso);
 
 });
 

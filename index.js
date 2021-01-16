@@ -23,6 +23,9 @@ const server = http.createServer((req, res) => {
   // Get the Query String Object.
   const qso = parsedURL.query;
 
+  // Get the headers as an object.
+  const headers = req.headers;
+
   // Send the response.
   res.end('Hello, world!\n');
 
@@ -30,6 +33,7 @@ const server = http.createServer((req, res) => {
   console.log(`Request received on path: ${trimmedPath}`);
   console.log(`Request method: ${method}`);
   console.log('Query string parameters are: ', qso);
+  console.log('User headers are: ', headers);
 
 });
 

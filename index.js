@@ -5,12 +5,37 @@
 
 // Dependencies
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
+const config = require('./config');
 
-// The server should respond to all requests with a string.
-const server = http.createServer((req, res) => {
+// HTTP Server Instance
+const httpServer = http.createServer((req, res) => {
+  unifiedServer(req, res);
+});
+// HTTP Server Start
+httpServer.listen(config.httpPort, () => {
+  console.log(`Up and running!\nIn environment: >>> ${config.envName.toUpperCase()} <<<\nAt port: ${config.httpPort}\n`);
+});
 
+// HTTPS Server Options
+const httpsServerOptions = {
+  key: fs.readFileSync('./https/key.pem'),
+  cert: fs.readFileSync('./https/cert.pem')
+};
+// HTTPS Server Instance
+const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
+  unifiedServer(req, res);
+});
+// HTTP Server Start
+httpsServer.listen(config.httpsPort, () => {
+  console.log(`Up and running!\nIn environment: >>> ${config.envName.toUpperCase()} <<<\nAt port: ${config.httpsPort}\n`);
+});
+
+// Common Server Logic
+const unifiedServer = (req, res) => {
   // Get the URL and parse it.
   const parsedURL = url.parse(req.url, true);
 
@@ -67,14 +92,9 @@ const server = http.createServer((req, res) => {
       console.log('Returning this response: ', statusCode, payloadString);
     });
   });
-});
+};
 
-// Start the server and have it listen on port 3000.
-server.listen(3000, () => {
-  console.log('Up and running at Port 3000!');
-});
-
-// Defining the handlers
+// Handlers
 const handlers = {};
 // Sample handler
 handlers.sample = (data, callback) => {
@@ -86,7 +106,7 @@ handlers.notFound = (data, callback) => {
   callback(404);
 };
 
-// Defining a request router for our application
+// Router
 const router = {
   'sample': handlers.sample
 };

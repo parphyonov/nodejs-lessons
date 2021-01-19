@@ -2,7 +2,7 @@
 
 // ## Section 2 - Background Information
 
-// https://github.com/airbnb/javascript
+// 🙀 https://github.com/airbnb/javascript 🙀
 
 // ## Section 3 - Building a RESTful API
 
@@ -21,11 +21,12 @@ function addConfiguration() {
 }
 
 // Adding HTTPS Supports
+// 🙀🙀🙀 !!! OPENSSL !!! 🙀🙀🙀
 // TERMINAL >>> openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
 function addHTTPSSupport() {
   // HTTP and HTTPS conflict with each other
-  // HTTP Port 80 by convention
-  // HTTPS Port 443 by convention
+  // 🙀🙀 HTTP Port 80 by convention 🙀🙀
+  // 🙀🙀 HTTPS Port 443 by convention 🙀🙀
   const https = require('https');
   const fs = requrie('fs');
   const httpsServerOptions = {

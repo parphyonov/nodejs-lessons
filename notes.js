@@ -38,3 +38,8 @@ function addHTTPSSupport() {
   });
   httpsServer.listen(config.httpsPort, () => console.log(config.httpsPort));
 }
+
+// Service 1: /ping
+function s1ping() {
+  
+}

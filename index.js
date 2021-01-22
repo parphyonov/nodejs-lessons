@@ -101,6 +101,9 @@ handlers.ping = (data, callback) => {
   // Callback a HTTP status code and a payload object
   callback(200);
 };
+handlers.hello = (data, callback) => {
+  callback(200, {welcome_message: 'Hello, world!'});
+}
 // Not Found handler
 handlers.notFound = (data, callback) => {
   callback(404);
@@ -108,5 +111,6 @@ handlers.notFound = (data, callback) => {
 
 // Router
 const router = {
-  'ping': handlers.ping
+  'ping': handlers.ping,
+  'hello': handlers.hello
 };

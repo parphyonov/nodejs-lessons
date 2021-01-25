@@ -41,5 +41,53 @@ function addHTTPSSupport() {
 
 // Service 1: /ping
 function s1ping() {
-  
+
+}
+
+// Storing Data
+function storeData() {
+  // Create a hidden folder (by convention) .data
+  // Create lib directory
+  // Create a file lib/data.js
+  // Dependencies
+  const fs = require('fs');
+  const path = require('path');
+  // Container for the module (to be exported)
+  const lib = {};
+  // Define the base directory for the data folder
+  lib.baseDir = path.join(__dirname, '/../.data/');
+  // Write data to a file
+  lib.create = (dir, filename, data, callback) => {
+    // Open the file for writing, 'wx' is a flag
+    fs.open(lib.baseDir + dir + '/' + filename + '.json', 'wx', (error, fileDescriptor) => {
+      if (!error && fileDescriptor) {
+        // convert data to string
+        const dataString = JSON.stringify(data);
+        // write to file and close it
+        fs.writeFile(fileDescriptor, dataString, error => {
+          if (!error) {
+            fs.close(fileDescriptor, error => {
+              if (!error) {
+                callback(false);
+              } else {
+                callback('Error closing the new file.');
+              }
+            });
+          } else {
+            callback('Error writing to new file.');
+          };
+        });
+      } else {
+        callback('Could not create new file, it may already exist.');
+      };
+    });
+  };
+  // Exporting
+  module.exports = lib;
+  // INDEX.JS
+  // TESTING CREATE FILE
+  // @TODO to delete this
+  _data.create('test', 'newFile', {'test_key': 'test_value'}, error => {
+    console.error(error);
+  });
 }

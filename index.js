@@ -11,18 +11,8 @@ const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 const _data = require('./lib/data');
-
-// _data.create('test', 'newFile', {'foo': 'bar'}, error => console.error(error));
-
-// _data.read('test', 'newFile', (error, data) => {
-//   if (!error && data) {
-//     console.log(data);
-//   } else {
-//     console.error(error);
-//   }
-// });
-// _data.update('test', 'newFile', {'bar': 'foo'}, error => console.error(error));
-_data.delete('test', 'newFile', error => console.error(error));
+const handlers = require('./lib/handlers');
+const helpers = require('./lib/helpers');
 
 // HTTP Server Instance
 const httpServer = http.createServer((req, res) => {
@@ -87,7 +77,7 @@ const unifiedServer = (req, res) => {
       'method': method,
       'queryStringParametersObject': qso,
       'headers': headers,
-      'payload': buffer
+      'payload': helpers.parseJsonToObject(buffer)
     }
     // Route the request to the handler specified in the router
     chosenHandler(data, (statusCode, payload) => {
@@ -107,23 +97,9 @@ const unifiedServer = (req, res) => {
   });
 };
 
-// Handlers
-const handlers = {};
-// Ping handler
-handlers.ping = (data, callback) => {
-  // Callback a HTTP status code and a payload object
-  callback(200);
-};
-handlers.hello = (data, callback) => {
-  callback(200, {welcome_message: 'Hello, world!'});
-}
-// Not Found handler
-handlers.notFound = (data, callback) => {
-  callback(404);
-};
-
 // Router
 const router = {
   'ping': handlers.ping,
-  'hello': handlers.hello
+  'hello': handlers.hello,
+  'users': handlers.users
 };

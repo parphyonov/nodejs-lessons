@@ -4,3 +4,5 @@ test1.js
 https/cert.pem
 https/key.pem
 .DS_Store
+.data/users
+.data/tokens

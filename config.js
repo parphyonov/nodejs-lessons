@@ -15,14 +15,16 @@ environments.staging = {
   httpPort: 3000,
   httpsPort: 3001,
   envName: 'staging',
-  hashingSecret: 'pirple'
+  hashingSecret: 'pirple',
+  maxChecks: 5
 };
 
 environments.production = {
   httpPort: 80,
   httpsPort: 443,
   envName: 'production',
-  hashingSecret: 'elprip'
+  hashingSecret: 'elprip',
+  maxChecks: 5
 };
 
 // Determine which environment was passed as a command-line argument
